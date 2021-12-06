@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./view.component.scss'],
 })
 export class ViewComponent {
+
   constructor() {}
 }
