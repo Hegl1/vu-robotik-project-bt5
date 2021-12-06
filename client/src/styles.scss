@@ -18,6 +18,10 @@ $theme: mat-light-theme(
 
 @include angular-material-theme($theme);
 
+* {
+  box-sizing: border-box;
+}
+
 html,
 body {
   min-height: 100%;
@@ -26,4 +30,34 @@ body {
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
+
+  background: #424242;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: normal !important;
+
+  > mat-icon,
+  > span {
+    vertical-align: middle;
+  }
+
+  > mat-icon {
+    margin-right: 0.5em;
+  }
+}
+
+strong {
+  font-weight: 500;
+}
+
+.mat-snack-bar-container.action-warn .mat-simple-snackbar-action {
+  color: mat-color($warn) !important;
+}
+
+.mr {
+  margin-right: 1rem;
 }
