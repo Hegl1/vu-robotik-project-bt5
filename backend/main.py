@@ -1,11 +1,4 @@
-from flask import Flask
-from flask import jsonify
-
-app = Flask(__name__)
-
-@app.route("/")
-def testEndpoint():
-    return jsonify({"Hello":"World"})
+from endpoints.dummy_endpoint import app
 
 if __name__ == '__main__':
     app.run(port=5000)

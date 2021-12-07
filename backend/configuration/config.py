@@ -1,6 +1,6 @@
 import json
 
-from data_objects import *
+from configuration.data_objects import *
 
 class config:
 
