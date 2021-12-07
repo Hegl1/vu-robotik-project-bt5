@@ -1,0 +1,18 @@
+{
+    "nodes": [
+        {
+            "name": "test1",
+            "package": "testpackage1",
+            "ssh": {
+                "ip": "127.0.0.1",
+                "username": "root",
+                "password": "password"
+            }
+        },
+        {
+            "name": "test2",
+            "package": "testpackage2",
+            "ssh": null
+        }
+    ]
+}
