@@ -2,10 +2,11 @@ import json
 
 from configuration.data_objects import *
 
-class config:
+class Configuration:
 
-    def __init__(self):
+    def __init__(self, json):
         self.nodes = dict()
+        self.read_from_JSON(json)
 
     def read_from_JSON(self, json_path):
         with open(json_path) as json_file:
