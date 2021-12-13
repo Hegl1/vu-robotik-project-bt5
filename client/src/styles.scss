@@ -6,7 +6,7 @@ $primary: mat-palette($mat-green, 800);
 $accent: mat-palette($mat-light-green, A700);
 $warn: mat-palette($mat-red);
 
-$theme: mat-light-theme(
+$theme: mat-dark-theme(
   (
     color: (
       primary: $primary,
@@ -60,4 +60,8 @@ strong {
 
 .mr {
   margin-right: 1rem;
+}
+
+.fg-warn {
+  color: mat-color($warn);
 }

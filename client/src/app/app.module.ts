@@ -15,7 +15,7 @@ import { ConfigService } from './core/config/config.service';
 const MATERIAL_MODULES = [MatButtonModule, MatToolbarModule, MatSnackBarModule, MatIconModule];
 
 export function setupConfig(config: ConfigService) {
-  return config.load();
+  return () => config.load();
 }
 
 @NgModule({
@@ -26,6 +26,7 @@ export function setupConfig(config: ConfigService) {
       provide: APP_INITIALIZER,
       useFactory: setupConfig,
       deps: [ConfigService],
+      multi: true,
     },
   ],
   bootstrap: [ViewComponent],

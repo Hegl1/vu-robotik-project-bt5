@@ -4,6 +4,14 @@ import { Observable } from 'rxjs';
 import { ConfigService } from '../config/config.service';
 import { ApiResponse } from './ApiResponse';
 
+export interface UpdateInfo {
+  nodes: {
+    package: string;
+    name: string;
+    running: boolean;
+  }[];
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -69,7 +77,16 @@ export class ApiService {
   private get<T>(path: string, httpOptions = this.httpOptions) {
     return this.handleResponse<T>(this.http.get<T>(this.URL + path, httpOptions));
   }
-  private post<T>(path: string, data: any = {}, httpOptions = this.httpOptions) {
-    return this.handleResponse<T>(this.http.post<T>(this.URL + path, data, httpOptions));
+  private patch<T>(path: string, data: any = {}, httpOptions = this.httpOptions) {
+    return this.handleResponse<T>(this.http.patch<T>(this.URL + path, data, httpOptions));
+  }
+
+  // api-routes
+  getUpdate() {
+    return this.get<UpdateInfo>('/update');
+  }
+
+  toggleNode(packageName: string, node: string) {
+    return this.patch<boolean>(`/nodes/toggle/${packageName}/${node}`);
   }
 }

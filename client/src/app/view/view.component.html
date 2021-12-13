@@ -1,6 +1,17 @@
 <mat-toolbar color="primary" class="mat-elevation-z8">
     <mat-icon class="mr">precision_manufacturing</mat-icon>
     <span>ROS Client</span>
+
+    <span class="toolbar-spacer"></span>
+
+    <button mat-mini-fab color="accent" [class.loading]="isReloading" (click)="reload()" [disabled]="isReloading">
+        <mat-icon>sync</mat-icon>
+    </button>
 </mat-toolbar>
 
-<main></main>
+<main>
+    <div class="loading-error mat-elevation-z6" *ngIf="hasError">
+        <mat-icon color="warn">error</mat-icon>
+        <span class="fg-warn">An error has occurred!</span>
+    </div>
+</main>
