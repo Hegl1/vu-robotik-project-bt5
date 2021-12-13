@@ -1,0 +1,62 @@
+openapi: 3.0.0
+info:
+  title: ROS Client API
+  version: '1.0'
+servers:
+  - url: 'http://localhost:5000'
+    description: Dev
+paths:
+  /update:
+    get:
+      summary: Returns the update-data
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nodes:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        running:
+                          type: boolean
+                      required:
+                        - name
+                        - running
+                required:
+                  - nodes
+      operationId: get-update
+      description: ''
+  '/nodes/toggle/{package}/{node}':
+    parameters:
+      - schema:
+          type: string
+        name: package
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: node
+        in: path
+        required: true
+    patch:
+      summary: Toggles the given node running-status
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: boolean
+                description: The new status of the node
+      operationId: get-nodes-toggle-package-node
+components:
+  schemas: {}
