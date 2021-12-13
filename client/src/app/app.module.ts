@@ -9,17 +9,27 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { ConfigService } from './core/config/config.service';
+import { SkeletonComponent } from './components/skeleton/skeleton.component';
 
-const MATERIAL_MODULES = [MatButtonModule, MatToolbarModule, MatSnackBarModule, MatIconModule];
+const MATERIAL_MODULES = [
+  MatButtonModule,
+  MatToolbarModule,
+  MatSnackBarModule,
+  MatIconModule,
+  MatCardModule,
+  MatProgressBarModule,
+];
 
 export function setupConfig(config: ConfigService) {
   return () => config.load();
 }
 
 @NgModule({
-  declarations: [ViewComponent],
+  declarations: [ViewComponent, SkeletonComponent],
   imports: [BrowserModule, BrowserAnimationsModule, HttpClientModule, ...MATERIAL_MODULES],
   providers: [
     {

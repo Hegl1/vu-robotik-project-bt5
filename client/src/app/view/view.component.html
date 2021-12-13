@@ -9,9 +9,72 @@
     </button>
 </mat-toolbar>
 
-<main>
-    <div class="loading-error mat-elevation-z6" *ngIf="hasError">
-        <mat-icon color="warn">error</mat-icon>
-        <span class="fg-warn">An error has occurred!</span>
-    </div>
+<div class="loading-error mat-elevation-z6" *ngIf="hasError">
+    <mat-icon color="warn">error</mat-icon>
+    <span class="fg-warn">An error has occurred!</span>
+</div>
+
+<main *ngIf="!hasError">
+    <section class="nodes">
+        <h2>
+            Nodes
+            <ng-container *ngIf="data">({{ data.nodes.length }})</ng-container>
+        </h2>
+
+        <div class="nodes-container">
+            <ng-container *ngIf="data">
+                <!-- TODO: disable card if refreshing or loading toggle-action -->
+                <mat-card class="node-container" *ngFor="let node of data.nodes">
+                    <mat-card-title>
+                        <span>{{ node.package }}</span>
+                        /
+                        <span>{{ node.name }}</span>
+                    </mat-card-title>
+
+                    <mat-card-content>
+                        <p class="status">
+                            Status:
+                            <span [class.fg-accent]="node.running" [class.fg-warn]="!node.running">
+                                {{ node.running ? 'Running' : 'Stopped' }}
+                            </span>
+                        </p>
+                    </mat-card-content>
+
+                    <mat-card-actions>
+                        <button mat-flat-button [color]="node.running ? 'warn' : 'accent'" (click)="(null)">
+                            <ng-container *ngIf="node.running">
+                                <mat-icon>stop</mat-icon>
+                                <span>Stop node</span>
+                            </ng-container>
+                            <ng-container *ngIf="!node.running">
+                                <mat-icon>play_arrow</mat-icon>
+                                <span>Start node</span>
+                            </ng-container>
+                        </button>
+                    </mat-card-actions>
+
+                    <mat-card-footer>
+                        <!-- TODO: only show if loading toggle-action -->
+                        <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+                    </mat-card-footer>
+                </mat-card>
+            </ng-container>
+
+            <ng-container *ngIf="!data && isReloading">
+                <bt5-skeleton></bt5-skeleton>
+                <bt5-skeleton></bt5-skeleton>
+                <bt5-skeleton></bt5-skeleton>
+                <bt5-skeleton></bt5-skeleton>
+            </ng-container>
+        </div>
+
+        <p *ngIf="!isReloading && data && data.nodes.length === 0">
+            <mat-icon class="vam">search_off</mat-icon>
+            <span class="vam">No nodes found</span>
+        </p>
+    </section>
+
+    <section class="topics">
+        <h2>Topics</h2>
+    </section>
 </main>
