@@ -1,7 +1,8 @@
 import sys
 
 from flask import jsonify
-from flask import Flask 
+from flask import Flask
+from flask_cors import CORS
 
 from configuration import data_objects, config
 from ros_services.node_service import Node_Service
@@ -14,6 +15,7 @@ def get_command_line():
         return sys.argv[1]
 
 app = Flask(__name__)
+CORS(app)
 config = config.Configuration(get_command_line())
 node_service = Node_Service(config)
 
