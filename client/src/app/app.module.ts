@@ -14,6 +14,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { ConfigService } from './core/config/config.service';
 import { SkeletonComponent } from './components/skeleton/skeleton.component';
+import { NodeComponent } from './components/node/node.component';
 
 const MATERIAL_MODULES = [
   MatButtonModule,
@@ -29,7 +30,7 @@ export function setupConfig(config: ConfigService) {
 }
 
 @NgModule({
-  declarations: [ViewComponent, SkeletonComponent],
+  declarations: [ViewComponent, SkeletonComponent, NodeComponent],
   imports: [BrowserModule, BrowserAnimationsModule, HttpClientModule, ...MATERIAL_MODULES],
   providers: [
     {

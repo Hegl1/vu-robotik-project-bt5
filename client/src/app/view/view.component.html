@@ -23,41 +23,7 @@
 
         <div class="nodes-container">
             <ng-container *ngIf="data">
-                <!-- TODO: disable card if refreshing or loading toggle-action -->
-                <mat-card class="node-container" *ngFor="let node of data.nodes">
-                    <mat-card-title>
-                        <span>{{ node.package }}</span>
-                        /
-                        <span>{{ node.name }}</span>
-                    </mat-card-title>
-
-                    <mat-card-content>
-                        <p class="status">
-                            Status:
-                            <span [class.fg-accent]="node.running" [class.fg-warn]="!node.running">
-                                {{ node.running ? 'Running' : 'Stopped' }}
-                            </span>
-                        </p>
-                    </mat-card-content>
-
-                    <mat-card-actions>
-                        <button mat-flat-button [color]="node.running ? 'warn' : 'accent'" (click)="(null)">
-                            <ng-container *ngIf="node.running">
-                                <mat-icon>stop</mat-icon>
-                                <span>Stop node</span>
-                            </ng-container>
-                            <ng-container *ngIf="!node.running">
-                                <mat-icon>play_arrow</mat-icon>
-                                <span>Start node</span>
-                            </ng-container>
-                        </button>
-                    </mat-card-actions>
-
-                    <mat-card-footer>
-                        <!-- TODO: only show if loading toggle-action -->
-                        <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
-                    </mat-card-footer>
-                </mat-card>
+                <bt5-node [node]="node" [disabled]="isReloading" *ngFor="let node of data.nodes"> </bt5-node>
             </ng-container>
 
             <ng-container *ngIf="!data && isReloading">

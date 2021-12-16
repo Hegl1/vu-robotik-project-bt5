@@ -4,12 +4,14 @@ import { Observable } from 'rxjs';
 import { ConfigService } from '../config/config.service';
 import { ApiResponse } from './ApiResponse';
 
+export interface Node {
+  package: string;
+  name: string;
+  running: boolean;
+}
+
 export interface UpdateInfo {
-  nodes: {
-    package: string;
-    name: string;
-    running: boolean;
-  }[];
+  nodes: Node[];
 }
 
 @Injectable({
