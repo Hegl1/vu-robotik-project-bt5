@@ -17,7 +17,7 @@ app = Flask(__name__)
 config = config.Configuration(get_command_line())
 node_service = Node_Service(config)
 
-@app.route("/nodes/toggle/<package>/<name>", methods=['PATCH'])
+@app.route("/nodes/toggle/<package>/<name>", methods=['PATCH', 'GET'])
 def start_node(package, name):
     #TODO catch exception when unknown node is called
     if node_service.get_node_status(package, name):
@@ -27,10 +27,17 @@ def start_node(package, name):
         node_service.start_node(package, name)
         return jsonify(True), 200
 
+@app.route("/update", methods=['GET'])
+def construct_update():
+    nodes = []
+    for node in node_service.get_nodes_with_statuses(config.nodes.values()):
+        nodes.append({"package":node[0].package, "name":node[0].name, "running":node[1]})
+    return jsonify({"nodes": nodes}), 200
+
 @app.route("/test")
 def stop_node():
-    node_service.get_node_status("turtlesim", "turtlesim_node")
-    return jsonify({"Meaningful":"Message"})
+    result = node_service.get_nodes_with_statuses(config.nodes.values())
+    return jsonify(result)
 
 if __name__ == '__main__': 
     app.run(port=5000)

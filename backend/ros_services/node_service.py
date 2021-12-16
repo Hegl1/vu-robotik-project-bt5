@@ -29,8 +29,19 @@ class Node_Service:
             #stop node on remote machine
             pass
 
+    def get_running_node_names(self):
+        actives = subprocess.check_output(["rosnode", "list"])
+        return actives.decode("utf-8")
 
     def get_node_status(self, package, name):
         node = self.config.nodes[f'{package}/{name}']
-        actives = subprocess.check_output(["rosnode", "list"])
-        return f'{node.package}_{node.name}' in actives.decode("utf-8")
+        actives = self.get_running_node_names()
+        return f'{node.package}_{node.name}' in actives
+
+    def get_nodes_with_statuses(self, nodes):
+        actives = self.get_running_node_names()
+        response = []
+        for node in nodes: 
+            running = True if f'{node.package}_{node.name}' in actives else False
+            response.append((node, running))
+        return response
