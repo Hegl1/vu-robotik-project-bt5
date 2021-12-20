@@ -1,4 +1,5 @@
 import subprocess
+import paramiko
 
 from configuration import data_objects
 from configuration.config import Configuration
@@ -14,11 +15,9 @@ class Node_Service:
         node = self.config.nodes[f'{package}/{name}']
 
         if node.ssh is None:
-            #start node on local machine
             subprocess.Popen(["rosrun", node.package, node.name, f"__name:={node.package}_{node.name}"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         else:
-            #start node on remote machine
-            pass
+            self._run_ssh_command(node, f"rosrun {node.package} {node.name} __name:={node.package}_{node.name}")
 
     def stop_node(self, package, name):
 
@@ -26,8 +25,7 @@ class Node_Service:
         if node.ssh is None:
             subprocess.Popen(["rosnode", "kill", f"{node.package}_{node.name}"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         else:
-            #stop node on remote machine
-            pass
+            self._run_ssh_command(node, f"rosnode kill {node.package}_{node.name}")
 
     def get_running_node_names(self):
         actives = subprocess.check_output(["rosnode", "list"])
@@ -45,3 +43,10 @@ class Node_Service:
             running = True if f'{node.package}_{node.name}' in actives else False
             response.append((node, running))
         return response
+
+    def _run_ssh_command(self, node, command):
+        ssh = paramiko.SSHClient()
+        ssh.connect(node.ssh.ip, username=node.ssh.username, password=node.ssh.password)
+        _, stdout, _ = ssh.exec_command(command)
+        stdout.channel.recv_exit_status()
+        ssh.close()

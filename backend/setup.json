@@ -8,7 +8,11 @@
         {
             "name": "draw_square",
             "package": "turtlesim",
-            "ssh": null
+            "ssh": {
+                "ip": "loopback",
+                "username": "test",
+                "password": "YAML"
+            }
         }
     ]
 }

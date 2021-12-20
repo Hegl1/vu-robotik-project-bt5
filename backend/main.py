@@ -1,4 +1,6 @@
 import sys
+import paramiko
+import socket
 
 from flask import jsonify
 from flask import Flask
@@ -28,8 +30,13 @@ def start_node(package, name):
         else:
             node_service.start_node(package, name)
             return jsonify(True), 200
-    except Exception:
-        return jsonify(None), 404
+    except (paramiko.BadHostKeyException, 
+        paramiko.AuthenticationException, 
+        paramiko.SSHException,
+        socket.gaierror) as e:
+        return jsonify(str(e)), 500
+    except Exception as e:
+        return jsonify(str(e)), 404
 
 @app.route("/update", methods=['GET'])
 def construct_update():
