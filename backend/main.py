@@ -21,13 +21,15 @@ node_service = Node_Service(config)
 
 @app.route("/nodes/toggle/<package>/<name>", methods=['PATCH', 'GET'])
 def start_node(package, name):
-    #TODO catch exception when unknown node is called
-    if node_service.get_node_status(package, name):
-        node_service.stop_node(package, name)
-        return jsonify(False), 200
-    else:
-        node_service.start_node(package, name)
-        return jsonify(True), 200
+    try:
+        if node_service.get_node_status(package, name):
+            node_service.stop_node(package, name)
+            return jsonify(False), 200
+        else:
+            node_service.start_node(package, name)
+            return jsonify(True), 200
+    except Exception:
+        return jsonify(None), 404
 
 @app.route("/update", methods=['GET'])
 def construct_update():
