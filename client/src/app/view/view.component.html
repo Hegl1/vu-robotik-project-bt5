@@ -4,6 +4,20 @@
 
     <span class="toolbar-spacer"></span>
 
+    <button mat-icon-button class="reload-menu-button" (click)="showRefreshMenu = !showRefreshMenu">
+        <mat-icon>settings</mat-icon>
+    </button>
+
+    <div class="reload-menu" [class.show]="showRefreshMenu">
+        <mat-slide-toggle color="accent" [(ngModel)]="autoRefreshEnabled" [disabled]="isReloading">
+            Autorefresh enabled
+        </mat-slide-toggle>
+
+        <select [(ngModel)]="refreshInterval" [disabled]="!autoRefreshEnabled || isReloading">
+            <option [ngValue]="option.seconds" *ngFor="let option of refreshIntervalOptions">{{ option.label }}</option>
+        </select>
+    </div>
+
     <button mat-mini-fab color="accent" [class.loading]="isReloading" (click)="reload()" [disabled]="isReloading">
         <mat-icon>sync</mat-icon>
     </button>

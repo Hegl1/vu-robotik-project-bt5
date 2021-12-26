@@ -11,10 +11,12 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { ConfigService } from './core/config/config.service';
 import { SkeletonComponent } from './components/skeleton/skeleton.component';
 import { NodeComponent } from './components/node/node.component';
+import { FormsModule } from '@angular/forms';
 
 const MATERIAL_MODULES = [
   MatButtonModule,
@@ -23,6 +25,7 @@ const MATERIAL_MODULES = [
   MatIconModule,
   MatCardModule,
   MatProgressBarModule,
+  MatSlideToggleModule,
 ];
 
 export function setupConfig(config: ConfigService) {
@@ -31,7 +34,7 @@ export function setupConfig(config: ConfigService) {
 
 @NgModule({
   declarations: [ViewComponent, SkeletonComponent, NodeComponent],
-  imports: [BrowserModule, BrowserAnimationsModule, HttpClientModule, ...MATERIAL_MODULES],
+  imports: [BrowserModule, BrowserAnimationsModule, HttpClientModule, FormsModule, ...MATERIAL_MODULES],
   providers: [
     {
       provide: APP_INITIALIZER,
