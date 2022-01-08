@@ -14,5 +14,11 @@
             "package": "testpackage2",
             "ssh": null
         }
+    ],
+    "topics": [
+        {
+            "name": "topicname",
+            "type": "topictype"
+        }
     ]
 }

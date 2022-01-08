@@ -6,6 +6,7 @@ class Configuration:
 
     def __init__(self, json):
         self.nodes = dict()
+        self.topic_dict = dict()
         self.read_from_JSON(json)
 
     def read_from_JSON(self, json_path):
@@ -13,6 +14,9 @@ class Configuration:
             raw_json_dict = json.load(json_file)
         for node in raw_json_dict["nodes"]:
             self._parse_node(node)
+        for topic in raw_json_dict["topics"]:
+            self._parse_topic(topic)
+        print(self.topic_dict)
     
     def _parse_node(self, node_dict):
         node = Ros_node(node_dict['name'], 
@@ -29,6 +33,10 @@ class Configuration:
         ssh_dict['username'],
         ssh_dict['password'])
         return ssh
+
+    def _parse_topic(self, topic_dict):
+        topic = Ros_topic(topic_dict['name'], topic_dict['type'])
+        self.topic_dict[topic.name] = topic
 
 class ConfigDuplicateException(Exception):
     pass
