@@ -16,7 +16,6 @@ class Configuration:
             self._parse_node(node)
         for topic in raw_json_dict["topics"]:
             self._parse_topic(topic)
-        print(self.topic_dict)
     
     def _parse_node(self, node_dict):
         node = Ros_node(node_dict['name'], 

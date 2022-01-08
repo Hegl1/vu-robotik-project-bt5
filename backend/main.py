@@ -1,4 +1,5 @@
 import sys
+import signal
 import paramiko
 import socket
 
@@ -8,6 +9,10 @@ from flask_cors import CORS
 
 from configuration import data_objects, config
 from ros_services.node_service import Node_Service
+from ros_services.topic_service import Topic_service
+
+def exit_handler(sig, frame):
+    sys.exit(0)
 
 def get_command_line():
     if len(sys.argv) < 2:
@@ -20,6 +25,9 @@ app = Flask(__name__)
 CORS(app)
 config = config.Configuration(get_command_line())
 node_service = Node_Service(config)
+topic_service = Topic_service(config)
+signal.signal(signal.SIGINT, exit_handler)
+
 
 @app.route("/nodes/toggle/<package>/<name>", methods=['PATCH', 'GET'])
 def start_node(package, name):
@@ -47,7 +55,7 @@ def construct_update():
 
 @app.route("/test")
 def stop_node():
-    result = node_service.get_nodes_with_statuses(config.nodes.values())
+    result = topic_service.reveice_topic_contents()
     return jsonify(result)
 
 if __name__ == '__main__': 
