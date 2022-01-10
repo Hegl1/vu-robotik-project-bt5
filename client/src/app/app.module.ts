@@ -18,6 +18,8 @@ import { SkeletonComponent } from './components/skeleton/skeleton.component';
 import { NodeComponent } from './components/node/node.component';
 import { FormsModule } from '@angular/forms';
 import { TopicComponent } from './components/topic/topic.component';
+import { SocketIoModule } from 'ngx-socket-io';
+import { WebsocketService } from './core/services/websocket.service';
 
 const MATERIAL_MODULES = [
   MatButtonModule,
@@ -35,7 +37,7 @@ export function setupConfig(config: ConfigService) {
 
 @NgModule({
   declarations: [ViewComponent, SkeletonComponent, NodeComponent, TopicComponent],
-  imports: [BrowserModule, BrowserAnimationsModule, HttpClientModule, FormsModule, ...MATERIAL_MODULES],
+  imports: [BrowserModule, BrowserAnimationsModule, HttpClientModule, FormsModule, SocketIoModule, ...MATERIAL_MODULES],
   providers: [
     {
       provide: APP_INITIALIZER,
@@ -43,6 +45,7 @@ export function setupConfig(config: ConfigService) {
       deps: [ConfigService],
       multi: true,
     },
+    WebsocketService,
   ],
   bootstrap: [ViewComponent],
 })

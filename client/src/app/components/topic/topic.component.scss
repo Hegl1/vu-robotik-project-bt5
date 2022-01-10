@@ -7,7 +7,31 @@
     text-align: center;
     font-size: 1.125rem;
     background: #1f1f1f;
-    padding: 0.25rem 0.5rem;
+    padding: 0.5rem;
+
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.25);
+
+    cursor: pointer;
+    position: relative;
+
+    .fake-menu {
+      position: absolute;
+      left: 0.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+
+      span {
+        display: inline-block;
+        width: 0.75rem;
+        height: 0.75rem;
+        border-radius: 50%;
+        background: #7a7a7a;
+
+        &:not(:last-child) {
+          margin-right: 0.5rem;
+        }
+      }
+    }
   }
 
   .topic-content {
@@ -15,7 +39,7 @@
     overflow-y: scroll;
     display: flex;
     flex-direction: column-reverse;
-    padding: 0.25rem 0.5rem;
+    padding: 0.5rem;
 
     .topic-item {
       white-space: pre-line;

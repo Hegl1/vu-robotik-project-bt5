@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService, UpdateInfo } from '../core/api/api.service';
 import { Logger, LoggerColor } from '../core/functions';
+import { WebsocketService } from '../core/services/websocket.service';
 
 const StorageNames = {
   autoRefreshEnabled: 'bt5_auto_refresh_enabled',
