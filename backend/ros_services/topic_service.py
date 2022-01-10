@@ -33,7 +33,7 @@ class Topic_service:
         for topic_name in self.topics:
             rospy.Subscriber(topic_name, rospy.AnyMsg, self._callback_wrapper(topic_name))
         
-    def reveice_topic_contents(self):
+    def receive_topic_contents(self):
         result = list()
         for topic in self.topics:
             self.locks[topic].acquire()

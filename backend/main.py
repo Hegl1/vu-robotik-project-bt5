@@ -51,11 +51,17 @@ def construct_update():
     nodes = []
     for node in node_service.get_nodes_with_statuses(config.nodes.values()):
         nodes.append({"package":node[0].package, "name":node[0].name, "running":node[1]})
-    return jsonify({"nodes": nodes}), 200
+    topics = topic_service.receive_topic_contents()
+    return jsonify({"nodes": nodes, "topics": topics}), 200
+
+@app.route("/topics/update")
+def get_topic_update():
+    result = topic_service.receive_topic_contents()
+    return jsonify(result)
 
 @app.route("/test")
 def stop_node():
-    result = topic_service.reveice_topic_contents()
+    result = topic_service.receive_topic_contents()
     return jsonify(result)
 
 if __name__ == '__main__': 
