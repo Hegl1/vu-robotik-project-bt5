@@ -1,5 +1,6 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
+import { Observable } from 'rxjs';
 import { ConfigService } from '../config/config.service';
 
 @Injectable({
@@ -7,16 +8,14 @@ import { ConfigService } from '../config/config.service';
 })
 export class WebsocketService extends Socket {
   constructor(private _config: ConfigService) {
-    super({ url: _config.get('websocketUrl') });
+    super({ url: _config.get('apiUrl') });
   }
 
   subscribeTopic(topic: string) {
-    let observable = new EventEmitter<string>();
-
-    this.on(topic, (message: string) => {
-      observable.emit(message);
+    return new Observable<string>((subscriber) => {
+      this.on(`topics/${topic}`, (message: string) => {
+        subscriber.next(message);
+      });
     });
-
-    return observable;
   }
 }

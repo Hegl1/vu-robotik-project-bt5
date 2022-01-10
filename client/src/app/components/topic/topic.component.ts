@@ -15,7 +15,7 @@ export class TopicComponent implements OnInit {
 
   ngOnInit() {
     this.websocket.subscribeTopic(this.topic.name).subscribe((message) => {
-      console.log('Websocket:', this.topic.name, message);
+      this.topic.content.push(message);
     });
   }
 }
