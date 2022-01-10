@@ -16,5 +16,8 @@
             "name": "/turtle1/pose",
             "type": "generic"
         }
+    ],
+    "parameters":[
+        "/run_id"
     ]
 }

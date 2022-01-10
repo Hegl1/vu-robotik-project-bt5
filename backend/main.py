@@ -9,6 +9,7 @@ from flask_cors import CORS
 
 from configuration import data_objects, config
 from ros_services.node_service import Node_Service
+from ros_services.parameter_service import Parameter_service
 from ros_services.topic_service import Topic_service
 
 def exit_handler(sig, frame):
@@ -26,6 +27,7 @@ CORS(app)
 config = config.Configuration(get_command_line())
 node_service = Node_Service(config)
 topic_service = Topic_service(config)
+parameter_service = Parameter_service(config)
 signal.signal(signal.SIGINT, exit_handler)
 
 
@@ -52,7 +54,8 @@ def construct_update():
     for node in node_service.get_nodes_with_statuses(config.nodes.values()):
         nodes.append({"package":node[0].package, "name":node[0].name, "running":node[1]})
     topics = topic_service.receive_topic_contents()
-    return jsonify({"nodes": nodes, "topics": topics}), 200
+    parameters = parameter_service.get_parameters()
+    return jsonify({"nodes": nodes, "topics": topics, "parameters": parameters}), 200
 
 @app.route("/topics/update")
 def get_topic_update():
@@ -61,7 +64,7 @@ def get_topic_update():
 
 @app.route("/test")
 def stop_node():
-    result = topic_service.receive_topic_contents()
+    result = parameter_service.get_parameters()
     return jsonify(result)
 
 if __name__ == '__main__': 

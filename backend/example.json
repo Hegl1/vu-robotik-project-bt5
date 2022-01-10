@@ -20,5 +20,8 @@
             "name": "topicname",
             "type": "topictype"
         }
+    ],
+    "parameters": [
+        "parametername"
     ]
 }

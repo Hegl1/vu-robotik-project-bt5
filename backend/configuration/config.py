@@ -7,7 +7,9 @@ class Configuration:
     def __init__(self, json):
         self.nodes = dict()
         self.topic_dict = dict()
+        self.parameters = list()
         self.read_from_JSON(json)
+        print(self.parameters)
 
     def read_from_JSON(self, json_path):
         with open(json_path) as json_file:
@@ -16,6 +18,8 @@ class Configuration:
             self._parse_node(node)
         for topic in raw_json_dict["topics"]:
             self._parse_topic(topic)
+        for parameter in raw_json_dict["parameters"]:
+            self.parameters.append(parameter)
     
     def _parse_node(self, node_dict):
         node = Ros_node(node_dict['name'], 
