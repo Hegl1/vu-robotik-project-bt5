@@ -9,6 +9,7 @@ import socket
 from flask import jsonify
 from flask import Flask
 from flask_cors import CORS
+from flask_socketio import SocketIO
 
 from configuration import data_objects, config
 from ros_services.node_service import Node_Service
@@ -26,10 +27,11 @@ def get_command_line():
         return sys.argv[1]
 
 app = Flask(__name__)
+socketIO = SocketIO(app, cors_allowed_origins='*')
 CORS(app)
 config = config.Configuration(get_command_line())
 node_service = Node_Service(config)
-topic_service = Topic_service(config)
+topic_service = Topic_service(config, socketIO)
 parameter_service = Parameter_service(config)
 
 #reinstall signal handler because ros overrides ctrl + c
@@ -71,5 +73,12 @@ def endpoint_test():
     result = parameter_service.get_parameters()
     return jsonify(result)
 
-if __name__ == '__main__': 
-    app.run(port=5000)
+@socketIO.on('connect')
+def socket_test():
+    print("connected")
+
+
+if __name__ == '__main__':
+    
+    socketIO.run(app, port=5000) 
+    #app.run(port=5000)

@@ -6,16 +6,18 @@ import copy
 from importlib import import_module
 from configuration import config, data_objects
 from threading import Lock, Thread
+from flask_socketio import emit
 
 #constant that determins how many messages of a topic get buffered.
 MAX_BUF_SIZE = 20
 
 class Topic_service:
 
-    def __init__(self, config):
+    def __init__(self, config, socket):
         self.topics = dict()
         self.locks = dict()
         self.config = config
+        self.socket = socket
         for topic in config.topic_dict:
             self.locks[topic] = Lock()
             self.topics[topic] = list()
@@ -32,7 +34,9 @@ class Topic_service:
         msg_type = connection_header[1]
         msg_class = getattr(import_module(ros_pkg), msg_type)
         self.locks[topic_name].acquire()
-        self.topics[topic_name].insert(0,str(msg_class().deserialize(data._buff)))
+        data = str(msg_class().deserialize(data._buff))
+        self.socket.emit("topics/" + topic_name, data)
+        self.topics[topic_name].insert(0,data)
         if len(self.topics[topic_name]) > MAX_BUF_SIZE:
             self.topics[topic_name].pop(-1)
         self.locks[topic_name].release()
