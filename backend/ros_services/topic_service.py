@@ -1,9 +1,12 @@
 import rospy
+import copy
 
 from importlib import import_module
 from configuration import config, data_objects
 from threading import Lock, Thread
 
+
+MAX_BUF_SIZE = 20
 
 class Topic_service:
 
@@ -23,6 +26,8 @@ class Topic_service:
         msg_class = getattr(import_module(ros_pkg), msg_type)
         self.locks[topic_name].acquire()
         self.topics[topic_name].append(str(msg_class().deserialize(data._buff)))
+        if len(self.topics[topic_name]) > MAX_BUF_SIZE:
+            self.topics[topic_name].pop(1)
         self.locks[topic_name].release()
     
     def _callback_wrapper(self, topic_name):
@@ -37,8 +42,7 @@ class Topic_service:
         result = list()
         for topic in self.topics:
             self.locks[topic].acquire()
-            tmp = self.topics[topic]
-            self.topics[topic] = []
+            tmp = copy.deepcopy(self.topics[topic])
             self.locks[topic].release()
             result.append({"name" : topic, "type": self.config.topic_dict[topic].type, "content":tmp})
         return result
