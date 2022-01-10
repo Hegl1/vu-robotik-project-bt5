@@ -1,0 +1,31 @@
+.topic-window {
+  background: #2b2b2b;
+  border-radius: 0.5em;
+  overflow: hidden;
+
+  .topic-header {
+    text-align: center;
+    font-size: 1.125rem;
+    background: #1f1f1f;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .topic-content {
+    max-height: 15em;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column-reverse;
+    padding: 0.25rem 0.5rem;
+
+    .topic-item {
+      white-space: pre-line;
+      font-family: 'Courier New', Courier, monospace;
+
+      &:not(:first-child) {
+        padding-bottom: 0.5em;
+        margin-bottom: 0.5em;
+        border-bottom: 1px solid #666;
+      }
+    }
+  }
+}

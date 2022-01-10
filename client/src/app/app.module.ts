@@ -17,6 +17,7 @@ import { ConfigService } from './core/config/config.service';
 import { SkeletonComponent } from './components/skeleton/skeleton.component';
 import { NodeComponent } from './components/node/node.component';
 import { FormsModule } from '@angular/forms';
+import { TopicComponent } from './components/topic/topic.component';
 
 const MATERIAL_MODULES = [
   MatButtonModule,
@@ -33,7 +34,7 @@ export function setupConfig(config: ConfigService) {
 }
 
 @NgModule({
-  declarations: [ViewComponent, SkeletonComponent, NodeComponent],
+  declarations: [ViewComponent, SkeletonComponent, NodeComponent, TopicComponent],
   imports: [BrowserModule, BrowserAnimationsModule, HttpClientModule, FormsModule, ...MATERIAL_MODULES],
   providers: [
     {

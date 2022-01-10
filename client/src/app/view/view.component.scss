@@ -157,6 +157,28 @@ main {
       }
     }
   }
+
+  .topics {
+    .topics-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: $card-gap;
+
+      @media screen and (max-width: 1100px) {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      @media screen and (max-width: 800px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      @media screen and (max-width: 550px) {
+        grid-template-columns: repeat(1, 1fr);
+      }
+
+      bt5-skeleton {
+        height: 18em;
+      }
+    }
+  }
 }
 
 @keyframes spin {

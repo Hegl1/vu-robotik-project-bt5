@@ -55,6 +55,27 @@
     </section>
 
     <section class="topics">
-        <h2>Topics</h2>
+        <h2>
+            Topics
+            <ng-container *ngIf="data">({{ data.topics.length }})</ng-container>
+        </h2>
+
+        <div class="topics-container">
+            <ng-container *ngIf="data">
+                <bt5-topic [topic]="topic" [disabled]="isReloading" *ngFor="let topic of data.topics"> </bt5-topic>
+            </ng-container>
+
+            <ng-container *ngIf="!data && isReloading">
+                <bt5-skeleton></bt5-skeleton>
+                <bt5-skeleton></bt5-skeleton>
+                <bt5-skeleton></bt5-skeleton>
+                <bt5-skeleton></bt5-skeleton>
+            </ng-container>
+        </div>
+
+        <p *ngIf="!isReloading && data && data.topics.length === 0">
+            <mat-icon class="vam">search_off</mat-icon>
+            <span class="vam">No topics found</span>
+        </p>
     </section>
 </main>
