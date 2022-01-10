@@ -73,11 +73,6 @@ def endpoint_test():
     result = parameter_service.get_parameters()
     return jsonify(result)
 
-@socketIO.on('connect')
-def socket_test():
-    print("connected")
-
-
 if __name__ == '__main__':
     
     socketIO.run(app, port=5000) 

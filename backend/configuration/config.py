@@ -12,7 +12,6 @@ class Configuration:
         self.topic_dict = dict()
         self.parameters = list()
         self.read_from_JSON(json)
-        print(self.parameters)
 
     def read_from_JSON(self, json_path):
 
