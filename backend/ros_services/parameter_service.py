@@ -1,3 +1,6 @@
+#this file contains a service 
+#class that handles interaction with parameters from the parameterservice.
+
 import rospy
 
 from configuration import config
@@ -8,6 +11,11 @@ class Parameter_service:
         self.config = config
 
     def get_parameters(self):
+
+        '''
+        Method that receives all configured parameters from parameterserver.
+        '''
+
         result = dict()
         for parameter in self.config.parameters:
             result[parameter] = rospy.get_param(parameter)

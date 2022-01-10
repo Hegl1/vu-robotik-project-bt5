@@ -1,3 +1,5 @@
+#this file contains dataclasses that are used to represent the config.
+
 from dataclasses import dataclass
 from enum import Enum
 

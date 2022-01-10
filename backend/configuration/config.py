@@ -1,3 +1,6 @@
+#this file contains a class that represents the configuration
+#from the input json file. Also provides functionality to read and parse the input.
+
 import json
 
 from configuration.data_objects import *
@@ -12,6 +15,11 @@ class Configuration:
         print(self.parameters)
 
     def read_from_JSON(self, json_path):
+
+        '''
+        Method that reads and parses the input of the config file.
+        '''
+
         with open(json_path) as json_file:
             raw_json_dict = json.load(json_file)
         for node in raw_json_dict["nodes"]:

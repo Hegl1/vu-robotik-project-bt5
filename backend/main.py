@@ -1,3 +1,6 @@
+#this file contains all endpoint 
+#definitions and instanciate all service classes
+
 import sys
 import signal
 import paramiko
@@ -28,8 +31,9 @@ config = config.Configuration(get_command_line())
 node_service = Node_Service(config)
 topic_service = Topic_service(config)
 parameter_service = Parameter_service(config)
-signal.signal(signal.SIGINT, exit_handler)
 
+#reinstall signal handler because ros overrides ctrl + c
+signal.signal(signal.SIGINT, exit_handler)
 
 @app.route("/nodes/toggle/<package>/<name>", methods=['PATCH', 'GET'])
 def start_node(package, name):
