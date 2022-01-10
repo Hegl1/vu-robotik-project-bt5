@@ -35,10 +35,11 @@ class Topic_service:
         msg_class = getattr(import_module(ros_pkg), msg_type)
         self.locks[topic_name].acquire()
         data = str(msg_class().deserialize(data._buff))
-        self.socket.emit("topics/" + topic_name, data)
-        self.topics[topic_name].insert(0,data)
-        if len(self.topics[topic_name]) > MAX_BUF_SIZE:
-            self.topics[topic_name].pop(-1)
+        if len(self.topics[topic_name]) == 0 or data != self.topics[topic_name][0]:
+            self.socket.emit("topics/" + topic_name, data)
+            self.topics[topic_name].insert(0,data)
+            if len(self.topics[topic_name]) > MAX_BUF_SIZE:
+                self.topics[topic_name].pop(-1)
         self.locks[topic_name].release()
     
     def _callback_wrapper(self, topic_name):
