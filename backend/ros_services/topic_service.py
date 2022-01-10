@@ -32,9 +32,9 @@ class Topic_service:
         msg_type = connection_header[1]
         msg_class = getattr(import_module(ros_pkg), msg_type)
         self.locks[topic_name].acquire()
-        self.topics[topic_name].append(str(msg_class().deserialize(data._buff)))
+        self.topics[topic_name].insert(0,str(msg_class().deserialize(data._buff)))
         if len(self.topics[topic_name]) > MAX_BUF_SIZE:
-            self.topics[topic_name].pop(1)
+            self.topics[topic_name].pop(-1)
         self.locks[topic_name].release()
     
     def _callback_wrapper(self, topic_name):
@@ -59,7 +59,7 @@ class Topic_service:
 
         '''
         Method that returns the currently buffered contetns
-        of all configured topics.s
+        of all configured topics
         '''
 
         result = list()
