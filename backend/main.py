@@ -36,7 +36,7 @@ parameter_service = Parameter_service(config)
 signal.signal(signal.SIGINT, exit_handler)
 
 @app.route("/nodes/toggle/<package>/<name>", methods=['PATCH', 'GET'])
-def start_node(package, name):
+def toggle_node(package, name):
     try:
         if node_service.get_node_status(package, name):
             node_service.stop_node(package, name)
@@ -53,7 +53,7 @@ def start_node(package, name):
         return jsonify(str(e)), 404
 
 @app.route("/update", methods=['GET'])
-def construct_update():
+def get_general_update():
     nodes = []
     for node in node_service.get_nodes_with_statuses(config.nodes.values()):
         nodes.append({"package":node[0].package, "name":node[0].name, "running":node[1]})
@@ -67,7 +67,7 @@ def get_topic_update():
     return jsonify(result)
 
 @app.route("/test")
-def stop_node():
+def endpoint_test():
     result = parameter_service.get_parameters()
     return jsonify(result)
 
