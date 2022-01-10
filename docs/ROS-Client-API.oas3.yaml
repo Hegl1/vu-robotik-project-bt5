@@ -30,8 +30,13 @@ paths:
                       required:
                         - name
                         - running
+                  topics:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Topic'
                 required:
                   - nodes
+                  - topics
       operationId: get-update
       description: ''
   '/nodes/toggle/{package}/{node}':
@@ -58,5 +63,34 @@ paths:
                 type: boolean
                 description: The new status of the node
       operationId: get-nodes-toggle-package-node
+  '/topics/update':
+    get:
+      summary: Returns the update for the topics
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Topic'
+      operationId: get-topics-update
 components:
-  schemas: {}
+  schemas:
+    Topic:
+      title: Topic
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+          example: generic
+        content:
+          type: array
+          items:
+            type: string
+      required:
+        - name
+        - type
+        - content
