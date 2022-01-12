@@ -54,6 +54,21 @@
         </p>
     </section>
 
+    <section class="parameters">
+        <h2>Parameters</h2>
+
+        <div class="parameters-container">
+            <bt5-parameters [parameters]="data.parameters" *ngIf="data"> </bt5-parameters>
+
+            <ng-container *ngIf="!data && isReloading">
+                <bt5-skeleton></bt5-skeleton>
+                <bt5-skeleton></bt5-skeleton>
+                <bt5-skeleton></bt5-skeleton>
+                <bt5-skeleton></bt5-skeleton>
+            </ng-container>
+        </div>
+    </section>
+
     <section class="topics">
         <h2>
             Topics
@@ -62,7 +77,7 @@
 
         <div class="topics-container">
             <ng-container *ngIf="data">
-                <bt5-topic [topic]="topic" [disabled]="isReloading" *ngFor="let topic of data.topics"> </bt5-topic>
+                <bt5-topic [topic]="topic" *ngFor="let topic of data.topics"> </bt5-topic>
             </ng-container>
 
             <ng-container *ngIf="!data && isReloading">

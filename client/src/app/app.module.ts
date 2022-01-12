@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTreeModule } from '@angular/material/tree';
 
 import { ConfigService } from './core/config/config.service';
 import { SkeletonComponent } from './components/skeleton/skeleton.component';
@@ -20,6 +21,7 @@ import { FormsModule } from '@angular/forms';
 import { TopicComponent } from './components/topic/topic.component';
 import { SocketIoModule } from 'ngx-socket-io';
 import { WebsocketService } from './core/services/websocket.service';
+import { ParametersComponent } from './components/parameters/parameters.component';
 
 const MATERIAL_MODULES = [
   MatButtonModule,
@@ -29,6 +31,7 @@ const MATERIAL_MODULES = [
   MatCardModule,
   MatProgressBarModule,
   MatSlideToggleModule,
+  MatTreeModule,
 ];
 
 export function setupConfig(config: ConfigService) {
@@ -36,7 +39,7 @@ export function setupConfig(config: ConfigService) {
 }
 
 @NgModule({
-  declarations: [ViewComponent, SkeletonComponent, NodeComponent, TopicComponent],
+  declarations: [ViewComponent, SkeletonComponent, NodeComponent, TopicComponent, ParametersComponent],
   imports: [BrowserModule, BrowserAnimationsModule, HttpClientModule, FormsModule, SocketIoModule, ...MATERIAL_MODULES],
   providers: [
     {

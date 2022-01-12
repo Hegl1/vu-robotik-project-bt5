@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SubSink } from '../functions';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SnackbarService {
+export class SnackbarService implements OnDestroy {
   private subSink = new SubSink();
 
   constructor(private snackBar: MatSnackBar) {}

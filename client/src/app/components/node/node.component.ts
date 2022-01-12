@@ -30,11 +30,11 @@ export class NodeComponent {
       Logger.error(
         'NodeComponent',
         LoggerColor.orange,
-        `Could not toggle Node (code: ${response.status})`,
+        `Could not toggle node (code: ${response.status})`,
         response.error
       );
 
-      this.snackbar.warn('Could not toggle Node!');
+      this.snackbar.warn('Could not toggle node!');
     }
 
     this.isToggling = false;

@@ -7,5 +7,7 @@
         <div class="topic-item" *ngFor="let item of topic.content">
             {{ item }}
         </div>
+
+        <i *ngIf="topic.content.length === 0">No data</i>
     </div>
 </div>

@@ -18,6 +18,7 @@ export interface Topic {
 
 export interface UpdateInfo {
   nodes: Node[];
+  parameters: any;
   topics: Topic[];
 }
 

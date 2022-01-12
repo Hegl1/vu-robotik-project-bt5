@@ -179,6 +179,14 @@ main {
       }
     }
   }
+
+  .parameters {
+    .parameters-container {
+      bt5-skeleton {
+        width: 20em;
+      }
+    }
+  }
 }
 
 @keyframes spin {

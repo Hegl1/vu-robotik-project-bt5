@@ -7,15 +7,27 @@ import { ConfigService } from '../config/config.service';
   providedIn: 'root',
 })
 export class WebsocketService extends Socket {
-  constructor(private _config: ConfigService) {
+  private topicObservables: Map<string, Observable<string>> = new Map();
+
+  constructor(_config: ConfigService) {
     super({ url: _config.get('apiUrl') });
   }
 
   subscribeTopic(topic: string) {
-    return new Observable<string>((subscriber) => {
+    let observable = this.topicObservables.get(topic);
+
+    if (observable) {
+      return observable;
+    }
+
+    observable = new Observable<string>((subscriber) => {
       this.on(`topics/${topic}`, (message: string) => {
         subscriber.next(message);
       });
     });
+
+    this.topicObservables.set(topic, observable);
+
+    return observable;
   }
 }
