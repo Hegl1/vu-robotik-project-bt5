@@ -1,0 +1,13 @@
+<h2>
+    <button mat-icon-button (click)="isExpanded = !isExpanded">
+        <mat-icon>{{ isExpanded ? 'expand_more' : 'chevron_right' }}</mat-icon>
+    </button>
+    <span>
+        {{ name }}
+        <ng-container *ngIf="amountData">({{ amountData }})</ng-container>
+    </span>
+</h2>
+
+<div class="container" [class.expanded]="isExpanded">
+    <ng-content></ng-content>
+</div>

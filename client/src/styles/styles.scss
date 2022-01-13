@@ -1,0 +1,75 @@
+@import '~@angular/material/theming';
+@import 'variables.scss';
+
+@include mat-core();
+
+$theme: mat-dark-theme(
+  (
+    color: (
+      primary: $primary,
+      accent: $accent,
+      warn: $warn,
+    ),
+  )
+);
+
+@include angular-material-theme($theme);
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+  height: fit-content;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+
+  background: #3a3a3a;
+  color: #fff;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: normal !important;
+
+  > mat-icon,
+  > span {
+    vertical-align: middle;
+  }
+
+  > mat-icon {
+    margin-right: 0.5em;
+  }
+}
+
+strong {
+  font-weight: 500;
+}
+
+.mat-snack-bar-container.action-warn .mat-simple-snackbar-action {
+  color: mat-color($warn) !important;
+}
+
+.mr {
+  margin-right: 1rem;
+}
+
+.vam {
+  vertical-align: middle;
+}
+
+.fg-primary {
+  color: mat-color($primary);
+}
+.fg-accent {
+  color: mat-color($accent);
+}
+.fg-warn {
+  color: mat-color($warn);
+}

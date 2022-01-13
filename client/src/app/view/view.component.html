@@ -1,0 +1,109 @@
+<mat-toolbar color="primary" class="mat-elevation-z8">
+    <mat-icon class="mr">precision_manufacturing</mat-icon>
+    <span>ROS Client</span>
+
+    <span class="toolbar-spacer"></span>
+
+    <button mat-icon-button class="reload-menu-button" (click)="showRefreshMenu = !showRefreshMenu">
+        <mat-icon>settings</mat-icon>
+    </button>
+
+    <div class="reload-menu" [class.show]="showRefreshMenu">
+        <mat-slide-toggle
+            color="accent"
+            [(ngModel)]="autoRefreshEnabled"
+            [disabled]="!autoRefreshEnabled && isReloading"
+        >
+            Autorefresh enabled
+        </mat-slide-toggle>
+
+        <select [(ngModel)]="refreshInterval" [disabled]="!autoRefreshEnabled || isReloading || nodeIsToggling">
+            <option [ngValue]="option.seconds" *ngFor="let option of refreshIntervalOptions">{{ option.label }}</option>
+        </select>
+    </div>
+
+    <button
+        mat-mini-fab
+        color="accent"
+        [class.loading]="isReloading"
+        (click)="updateRefreshTimeout(true)"
+        [disabled]="isReloading || nodeIsToggling"
+    >
+        <mat-icon>sync</mat-icon>
+    </button>
+</mat-toolbar>
+
+<div class="loading-error mat-elevation-z6" *ngIf="hasError">
+    <mat-icon color="warn">error</mat-icon>
+    <span class="fg-warn">An error has occurred!</span>
+</div>
+
+<main *ngIf="!hasError">
+    <bt5-section class="nodes" name="Nodes" [amountData]="data ? data.nodes.length : null">
+        <div class="nodes-container">
+            <ng-container *ngIf="data">
+                <bt5-node
+                    [node]="node"
+                    [disabled]="isReloading"
+                    (isToggling)="nodeIsToggling = $event"
+                    *ngFor="let node of data.nodes"
+                >
+                </bt5-node>
+            </ng-container>
+
+            <ng-container *ngIf="!data && isReloading">
+                <bt5-skeleton></bt5-skeleton>
+                <bt5-skeleton></bt5-skeleton>
+                <bt5-skeleton></bt5-skeleton>
+                <bt5-skeleton></bt5-skeleton>
+            </ng-container>
+        </div>
+
+        <p *ngIf="!isReloading && data && data.nodes.length === 0">
+            <mat-icon class="vam">search_off</mat-icon>
+            <span class="vam">No nodes found</span>
+        </p>
+    </bt5-section>
+
+    <bt5-section class="parameters" name="Parameters">
+        <div class="parameters-container">
+            <bt5-parameters [parameters]="data.parameters" *ngIf="data"> </bt5-parameters>
+
+            <ng-container *ngIf="!data && isReloading">
+                <bt5-skeleton></bt5-skeleton>
+                <bt5-skeleton></bt5-skeleton>
+                <bt5-skeleton></bt5-skeleton>
+                <bt5-skeleton></bt5-skeleton>
+            </ng-container>
+        </div>
+
+        <p
+            *ngIf="
+                !this.isReloading && this.data && (!this.data.parameters || isObjectArrayEmpty(this.data.parameters))
+            "
+        >
+            <mat-icon class="vam">search_off</mat-icon>
+            <span class="vam">No parameters found</span>
+        </p>
+    </bt5-section>
+
+    <bt5-section class="topics" name="Topics" [amountData]="data ? data.topics.length : null">
+        <div class="topics-container">
+            <ng-container *ngIf="data">
+                <bt5-topic [topic]="topic" *ngFor="let topic of data.topics"> </bt5-topic>
+            </ng-container>
+
+            <ng-container *ngIf="!data && isReloading">
+                <bt5-skeleton></bt5-skeleton>
+                <bt5-skeleton></bt5-skeleton>
+                <bt5-skeleton></bt5-skeleton>
+                <bt5-skeleton></bt5-skeleton>
+            </ng-container>
+        </div>
+
+        <p *ngIf="!isReloading && data && data.topics.length === 0">
+            <mat-icon class="vam">search_off</mat-icon>
+            <span class="vam">No topics found</span>
+        </p>
+    </bt5-section>
+</main>

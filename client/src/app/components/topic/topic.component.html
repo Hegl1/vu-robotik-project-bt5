@@ -1,0 +1,13 @@
+<div class="topic-window mat-elevation-z6">
+    <div class="topic-header">
+        {{ topic.name }}
+    </div>
+
+    <div class="topic-content">
+        <div class="topic-item" *ngFor="let item of topic.content">
+            {{ item }}
+        </div>
+
+        <i *ngIf="topic.content.length === 0">No data</i>
+    </div>
+</div>
