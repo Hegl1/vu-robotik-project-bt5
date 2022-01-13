@@ -68,6 +68,7 @@ export class ParametersComponent implements OnInit {
           }
         } else {
           icon = 'do_not_disturb_on';
+          value = 'null';
         }
 
         return { name: key, value, icon };
