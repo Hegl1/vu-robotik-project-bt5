@@ -39,12 +39,7 @@
 </div>
 
 <main *ngIf="!hasError">
-    <section class="nodes">
-        <h2>
-            Nodes
-            <ng-container *ngIf="data">({{ data.nodes.length }})</ng-container>
-        </h2>
-
+    <bt5-section class="nodes" name="Nodes" [amountData]="data ? data.nodes.length : null">
         <div class="nodes-container">
             <ng-container *ngIf="data">
                 <bt5-node
@@ -68,11 +63,9 @@
             <mat-icon class="vam">search_off</mat-icon>
             <span class="vam">No nodes found</span>
         </p>
-    </section>
+    </bt5-section>
 
-    <section class="parameters">
-        <h2>Parameters</h2>
-
+    <bt5-section class="parameters" name="Parameters">
         <div class="parameters-container">
             <bt5-parameters [parameters]="data.parameters" *ngIf="data"> </bt5-parameters>
 
@@ -83,14 +76,18 @@
                 <bt5-skeleton></bt5-skeleton>
             </ng-container>
         </div>
-    </section>
 
-    <section class="topics">
-        <h2>
-            Topics
-            <ng-container *ngIf="data">({{ data.topics.length }})</ng-container>
-        </h2>
+        <p
+            *ngIf="
+                !this.isReloading && this.data && (!this.data.parameters || isObjectArrayEmpty(this.data.parameters))
+            "
+        >
+            <mat-icon class="vam">search_off</mat-icon>
+            <span class="vam">No parameters found</span>
+        </p>
+    </bt5-section>
 
+    <bt5-section class="topics" name="Topics" [amountData]="data ? data.topics.length : null">
         <div class="topics-container">
             <ng-container *ngIf="data">
                 <bt5-topic [topic]="topic" *ngFor="let topic of data.topics"> </bt5-topic>
@@ -108,5 +105,5 @@
             <mat-icon class="vam">search_off</mat-icon>
             <span class="vam">No topics found</span>
         </p>
-    </section>
+    </bt5-section>
 </main>

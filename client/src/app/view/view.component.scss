@@ -34,7 +34,6 @@ mat-toolbar {
       color: mat-color($primary, default-contrast);
       padding: 0.5em;
 
-      // border: 1px solid #ccc;
       border: 0;
       border-radius: 0.125em;
 
@@ -130,7 +129,7 @@ mat-toolbar {
 main {
   padding: 1em;
 
-  section:not(:last-of-type) {
+  bt5-section:not(:last-of-type) {
     padding-bottom: 1em;
     border-bottom: 1px solid #616161;
     margin-bottom: 1em;

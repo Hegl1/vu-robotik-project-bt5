@@ -22,6 +22,7 @@ import { TopicComponent } from './components/topic/topic.component';
 import { SocketIoModule } from 'ngx-socket-io';
 import { WebsocketService } from './core/services/websocket.service';
 import { ParametersComponent } from './components/parameters/parameters.component';
+import { SectionComponent } from './components/section/section.component';
 
 const MATERIAL_MODULES = [
   MatButtonModule,
@@ -39,7 +40,7 @@ export function setupConfig(config: ConfigService) {
 }
 
 @NgModule({
-  declarations: [ViewComponent, SkeletonComponent, NodeComponent, TopicComponent, ParametersComponent],
+  declarations: [ViewComponent, SkeletonComponent, NodeComponent, TopicComponent, ParametersComponent, SectionComponent],
   imports: [BrowserModule, BrowserAnimationsModule, HttpClientModule, FormsModule, SocketIoModule, ...MATERIAL_MODULES],
   providers: [
     {

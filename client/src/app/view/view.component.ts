@@ -147,4 +147,8 @@ export class ViewComponent implements OnInit {
       this.refreshTimeout = setTimeout(this.updateRefreshTimeout.bind(this), this.refreshInterval * 1000);
     }
   }
+
+  isObjectArrayEmpty(element: any) {
+    return Object.keys(element).length === 0;
+  }
 }
