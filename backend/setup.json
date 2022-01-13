@@ -15,9 +15,19 @@
         {
             "name": "/turtle1/pose",
             "type": "generic"
+        }, {
+            "name": "/turtle1/color_sensor",
+            "type": "generic"
+        }, {
+            "name": "/turtle1/cmd_vel",
+            "type": "generic"
         }
     ],
     "parameters":[
-        "/run_id"
+        "/rosdistro",
+        "/roslaunch",
+        "/rosversion",
+        "/run_id",
+        "/turtlesim_turtlesim_node"
     ]
 }

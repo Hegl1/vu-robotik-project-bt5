@@ -18,5 +18,8 @@ class Parameter_service:
 
         result = dict()
         for parameter in self.config.parameters:
-            result[parameter] = rospy.get_param(parameter)
+            try:
+                result[parameter] = rospy.get_param(parameter)
+            except KeyError:
+                result[parameter] = None
         return result
