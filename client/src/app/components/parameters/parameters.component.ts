@@ -1,5 +1,5 @@
 import { NestedTreeControl } from '@angular/cdk/tree';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 
 interface TreeNode {
@@ -14,12 +14,14 @@ interface TreeNode {
   templateUrl: './parameters.component.html',
   styleUrls: ['./parameters.component.scss'],
 })
-export class ParametersComponent implements OnInit {
+export class ParametersComponent {
   @Input('parameters')
   set parameters(parameters: any) {
     this._parameters = parameters;
     this.dataSource.data = this.parseTree(parameters);
     this.treeControl.dataNodes = this.dataSource.data;
+
+    this.treeControl.expandAll();
   }
   get parameters() {
     return this._parameters;
@@ -31,10 +33,6 @@ export class ParametersComponent implements OnInit {
   dataSource = new MatTreeNestedDataSource<TreeNode>();
 
   constructor() {}
-
-  ngOnInit() {
-    this.treeControl.expandAll();
-  }
 
   hasChild(_: number, node: TreeNode) {
     return !!node.children && node.children.length > 0;
@@ -57,7 +55,7 @@ export class ParametersComponent implements OnInit {
               icon = 'tag';
               break;
             case 'boolean':
-              icon = value ? 'toggle_on' : 'toggle_off';
+              icon = 'check_circle';
               break;
             case 'string':
               icon = 'abc';

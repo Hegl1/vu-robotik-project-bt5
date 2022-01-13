@@ -19,7 +19,7 @@
             mat-flat-button
             [color]="node.running ? 'warn' : 'accent'"
             (click)="toggleNode()"
-            [disabled]="isToggling || isDisabled"
+            [disabled]="_isToggling || isDisabled"
         >
             <ng-container *ngIf="node.running">
                 <mat-icon>stop</mat-icon>
@@ -33,6 +33,6 @@
     </mat-card-actions>
 
     <mat-card-footer>
-        <mat-progress-bar mode="indeterminate" color="accent" *ngIf="isToggling"> </mat-progress-bar>
+        <mat-progress-bar mode="indeterminate" color="accent" *ngIf="_isToggling"> </mat-progress-bar>
     </mat-card-footer>
 </mat-card>

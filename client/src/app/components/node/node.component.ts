@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ApiService, Node } from 'src/app/core/api/api.service';
 import { Logger, LoggerColor } from 'src/app/core/functions';
 import { SnackbarService } from 'src/app/core/services/snackbar.service';
@@ -12,12 +12,15 @@ export class NodeComponent {
   @Input('node') node!: Node;
   @Input('disabled') isDisabled = false;
 
-  isToggling = false;
+  @Output('isToggling') isToggling = new EventEmitter<boolean>();
+
+  _isToggling = false;
 
   constructor(private api: ApiService, private snackbar: SnackbarService) {}
 
   async toggleNode() {
-    this.isToggling = true;
+    this._isToggling = true;
+    this.isToggling.emit(true);
     let response = await this.api.toggleNode(this.node.package, this.node.name);
 
     await new Promise<void>((res) => setTimeout(() => res(), 1000));
@@ -37,6 +40,7 @@ export class NodeComponent {
       this.snackbar.warn('Could not toggle node!');
     }
 
-    this.isToggling = false;
+    this._isToggling = false;
+    this.isToggling.emit(false);
   }
 }

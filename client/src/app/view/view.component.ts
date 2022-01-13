@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService, UpdateInfo } from '../core/api/api.service';
 import { Logger, LoggerColor } from '../core/functions';
-import { WebsocketService } from '../core/services/websocket.service';
 
 const StorageNames = {
   autoRefreshEnabled: 'bt5_auto_refresh_enabled',
@@ -22,6 +21,7 @@ export class ViewComponent implements OnInit {
 
   private _autoRefreshEnabled = true;
   private _refreshInterval: number = 5;
+  private _amountNodesToggling = 0;
 
   private refreshTimeout: number | null = null;
 
@@ -76,6 +76,21 @@ export class ViewComponent implements OnInit {
     this.updateRefreshTimeout();
   }
 
+  get nodeIsToggling() {
+    return this._amountNodesToggling > 0;
+  }
+  set nodeIsToggling(nodeIsToggling: boolean) {
+    this._amountNodesToggling += nodeIsToggling ? 1 : -1;
+
+    if (this._amountNodesToggling < 0) {
+      this._amountNodesToggling = 0;
+    }
+
+    if (!this.nodeIsToggling && this.autoRefreshEnabled && this.refreshTimeout === null) {
+      this.updateRefreshTimeout(true);
+    }
+  }
+
   ngOnInit() {
     let storageAutoRefreshEnabled = localStorage.getItem(StorageNames.autoRefreshEnabled);
     let storageRefreshInterval = localStorage.getItem(StorageNames.refreshInterval);
@@ -99,8 +114,6 @@ export class ViewComponent implements OnInit {
     this.isReloading = true;
     this.hasError = false;
 
-    await new Promise<void>((res) => setTimeout(() => res(), 1000));
-
     let response = await this.api.getUpdate();
 
     if (response.isOK()) {
@@ -116,15 +129,16 @@ export class ViewComponent implements OnInit {
     }
 
     this.isReloading = false;
+    this._amountNodesToggling = 0;
   }
 
-  private async updateRefreshTimeout(forceReload = false) {
+  async updateRefreshTimeout(forceReload = false) {
     if (this.refreshTimeout !== null) {
       clearTimeout(this.refreshTimeout);
       this.refreshTimeout = null;
     }
 
-    if (!this.autoRefreshEnabled && !forceReload) return;
+    if (this.nodeIsToggling || (!this.autoRefreshEnabled && !forceReload)) return;
 
     await this.reload();
 
