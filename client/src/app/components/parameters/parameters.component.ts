@@ -15,7 +15,17 @@ interface TreeNode {
   styleUrls: ['./parameters.component.scss'],
 })
 export class ParametersComponent implements OnInit {
-  @Input('parameters') parameters!: any;
+  @Input('parameters')
+  set parameters(parameters: any) {
+    this._parameters = parameters;
+    this.dataSource.data = this.parseTree(parameters);
+    this.treeControl.dataNodes = this.dataSource.data;
+  }
+  get parameters() {
+    return this._parameters;
+  }
+
+  private _parameters: any = null;
 
   treeControl = new NestedTreeControl<TreeNode>((node) => node.children);
   dataSource = new MatTreeNestedDataSource<TreeNode>();
@@ -23,8 +33,6 @@ export class ParametersComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.dataSource.data = this.parseTree(this.parameters);
-    this.treeControl.dataNodes = this.dataSource.data;
     this.treeControl.expandAll();
   }
 
@@ -43,19 +51,23 @@ export class ParametersComponent implements OnInit {
         // leaf-node
         let icon = 'question_mark';
 
-        switch (typeof value) {
-          case 'number':
-            icon = 'tag';
-            break;
-          case 'boolean':
-            icon = value ? 'toggle_on' : 'toggle_off';
-            break;
-          case 'string':
-            icon = 'abc';
-            value = `"${value}"`;
-            break;
-          default:
-            value = `"${value}"`;
+        if (value !== null) {
+          switch (typeof value) {
+            case 'number':
+              icon = 'tag';
+              break;
+            case 'boolean':
+              icon = value ? 'toggle_on' : 'toggle_off';
+              break;
+            case 'string':
+              icon = 'abc';
+              value = `"${value}"`;
+              break;
+            default:
+              value = `"${value}"`;
+          }
+        } else {
+          icon = 'do_not_disturb_on';
         }
 
         return { name: key, value, icon };
