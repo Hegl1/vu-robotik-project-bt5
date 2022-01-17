@@ -21,7 +21,7 @@ def exit_handler(sig, frame):
 
 def get_command_line():
     if len(sys.argv) < 2:
-        print("usage: python3 main.py <config_name.json>")
+        print("usage: python3 main.py <config_name.json> [<port>]")
         sys.exit()
     else:
         return sys.argv[1]
@@ -68,17 +68,6 @@ def get_topic_update():
     result = topic_service.receive_topic_contents()
     return jsonify(result)
 
-@app.route("/test")
-def endpoint_test():
-    result = parameter_service.get_parameters()
-    return jsonify(result)
-
-@socketIO.on("connect")
-def testmethod():
-    #print("HELP")
-    pass
-
 if __name__ == '__main__':
-    
-    socketIO.run(app, port=5000) 
-    #app.run(port=5000)
+    port = 5000 if len(sys.argv) < 3 else sys.argv[2] 
+    socketIO.run(app, port=port) 
