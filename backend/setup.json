@@ -1,0 +1,38 @@
+{
+    "nodes": [
+        {
+            "name": "turtlesim_node",
+            "package": "turtlesim",
+            "ssh": null
+        },
+        {
+            "name": "draw_square",
+            "package": "turtlesim",
+            "ssh": null
+        },
+        {
+            "name": "mimic",
+            "package": "turtlesim",
+            "ssh": null
+        }
+    ],
+    "topics": [
+        {
+            "name": "/turtle1/pose",
+            "type": "generic"
+        }, {
+            "name": "/turtle1/color_sensor",
+            "type": "generic"
+        }, {
+            "name": "/turtle1/cmd_vel",
+            "type": "generic"
+        }
+    ],
+    "parameters":[
+        "/rosdistro",
+        "/roslaunch",
+        "/rosversion",
+        "/run_id",
+        "/turtlesim_turtlesim_node"
+    ]
+}

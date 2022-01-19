@@ -1,0 +1,27 @@
+{
+    "nodes": [
+        {
+            "name": "turtlesim_node",
+            "package": "turtlesim",
+            "ssh": {
+                "ip": "127.0.0.1",
+                "username": "root",
+                "password": "password"
+            }
+        },
+        {
+            "name": "test2",
+            "package": "testpackage2",
+            "ssh": null
+        }
+    ],
+    "topics": [
+        {
+            "name": "topicname",
+            "type": "topictype"
+        }
+    ],
+    "parameters": [
+        "parametername"
+    ]
+}
