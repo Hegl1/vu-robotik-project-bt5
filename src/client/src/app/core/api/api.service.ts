@@ -32,7 +32,7 @@ export class ApiService {
    * The api url from the config
    */
   get URL() {
-    return this.config.get('apiUrl', 'http://localhost:5000');
+    return this.config.get('apiUrl', '');
   }
 
   /**

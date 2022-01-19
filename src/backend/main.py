@@ -1,6 +1,7 @@
 #this file contains all endpoint 
-#definitions and instanciate all service classes
+#definitions and instantiate all service classes
 
+import os
 import sys
 import signal
 import paramiko
@@ -10,6 +11,7 @@ from flask import jsonify
 from flask import Flask
 from flask_cors import CORS
 from flask_socketio import SocketIO
+from flask import render_template
 
 from configuration import data_objects, config
 from ros_services.node_service import Node_Service
@@ -26,7 +28,7 @@ def get_command_line():
     else:
         return sys.argv[1]
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder = os.path.abspath("./frontend"), static_folder = os.path.abspath("./frontend"), static_url_path = '')
 socketIO = SocketIO(app, cors_allowed_origins='*')
 CORS(app)
 config = config.Configuration(get_command_line())
@@ -67,6 +69,10 @@ def get_general_update():
 def get_topic_update():
     result = topic_service.receive_topic_contents()
     return jsonify(result)
+
+@app.route("/")
+def view():
+    return render_template('index.html')
 
 if __name__ == '__main__':
     port = 5000 if len(sys.argv) < 3 else sys.argv[2] 
