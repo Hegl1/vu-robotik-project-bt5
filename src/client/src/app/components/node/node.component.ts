@@ -23,8 +23,6 @@ export class NodeComponent {
     this.isToggling.emit(true);
     let response = await this.api.toggleNode(this.node.package, this.node.name);
 
-    await new Promise<void>((res) => setTimeout(() => res(), 1000));
-
     if (response.isOK()) {
       if (typeof response.value === 'boolean') {
         this.node.running = response.value;
