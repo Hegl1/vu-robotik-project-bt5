@@ -21,7 +21,7 @@
 ### Backend
 1. Install the python dependencies: `pip install -r requirements.txt`
 1. Set the values inside of the `setup.json` file
-1. Start the backend using `python3 main.py setup.json`
+1. Start the backend using `python3 main.py setup.json [port]` (default for the port is 5000)
 1. Make sure you have a valid ROS installation, rospy is installed and the backend runs on the ROS-Master
 
 ### Frontend
@@ -40,5 +40,5 @@ To build the project you have to run the `build.sh` bash-script. It will build t
 
 ## Deploying the build
 1. Make sure you set the correct values inside of the `setup.json` file
-1. Start the server using `python3 main.py setup.json`
-1. The frontend is now reachable at `http://localhost:<port>`, where the port is the set value from the `setup.json`
+1. Start the server using `python3 main.py setup.json [port]`
+1. The frontend is now reachable at `http://localhost:<port>` (default for the port is 5000)
