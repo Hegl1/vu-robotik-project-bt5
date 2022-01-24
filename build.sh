@@ -25,5 +25,5 @@ fi
 
 cd $ROOT
 
-zip -r ROS-Client.zip build
+zip -r dist/ROS-Client.zip build/*
 rm -rf build

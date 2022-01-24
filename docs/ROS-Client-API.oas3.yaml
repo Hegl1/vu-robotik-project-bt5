@@ -23,20 +23,27 @@ paths:
                     items:
                       type: object
                       properties:
+                        package:
+                          type: string
                         name:
                           type: string
                         running:
                           type: boolean
                       required:
+                        - package
                         - name
                         - running
                   topics:
                     type: array
                     items:
                       $ref: '#/components/schemas/Topic'
+                  parameters:
+                    type: object
+                    additionalProperties: true
                 required:
                   - nodes
                   - topics
+                  - parameters
       operationId: get-update
       description: ''
   '/nodes/toggle/{package}/{node}':
@@ -73,7 +80,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Topic'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Topic'
       operationId: get-topics-update
 components:
   schemas:
